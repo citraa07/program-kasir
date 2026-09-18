@@ -1,0 +1,59 @@
+tambahan_laporan = '''
+
+def buat_laporan_penjualan_harian(semua_transaksi):
+    """
+    Membuat laporan ringkas penjualan harian: total transaksi, total item
+    terjual, total pendapatan, dan barang terlaris.
+    """
+    total_transaksi = len(semua_transaksi)
+    total_item = sum(t["jumlah"] for t in semua_transaksi)
+    total_pendapatan = sum(t["subtotal"] for t in semua_transaksi)
+
+    rekap_barang = {}
+    for t in semua_transaksi:
+        nama = t["nama_barang"]
+        rekap_barang[nama] = rekap_barang.get(nama, 0) + t["jumlah"]
+
+    barang_terlaris = max(rekap_barang, key=rekap_barang.get) if rekap_barang else "-"
+
+    return {
+        "total_transaksi": total_transaksi,
+        "total_item_terjual": total_item,
+        "total_pendapatan": total_pendapatan,
+        "barang_terlaris": barang_terlaris,
+        "rekap_per_barang": rekap_barang,
+    }
+
+
+def cetak_laporan_penjualan_harian(semua_transaksi):
+    """Mencetak laporan penjualan harian ke layar."""
+    laporan = buat_laporan_penjualan_harian(semua_transaksi)
+
+    print("========= LAPORAN PENJUALAN HARIAN =========")
+    print(f"Total baris transaksi   : {laporan[\\'total_transaksi\\']}")
+    print(f"Total item terjual      : {laporan[\\'total_item_terjual\\']}")
+    print(f"Total pendapatan        : Rp{laporan[\\'total_pendapatan\\']:,.0f}")
+    print(f"Barang terlaris         : {laporan[\\'barang_terlaris\\']}")
+    print("---------------------------------------------")
+    print("Rekap per barang:")
+    for nama, qty in laporan["rekap_per_barang"].items():
+        print(f"  - {nama:<15}: {qty} terjual")
+    print("===============================================")
+'''
+
+# Sisipkan fungsi laporan sebelum fungsi cetak_struk
+with open('kasir.py', 'r') as f:
+    isi = f.read()
+
+isi = isi.replace('def cetak_struk(transaksi_list):', tambahan_laporan.strip() + '\n\n\ndef cetak_struk(transaksi_list):')
+
+# Tambahkan panggilan laporan di akhir main()
+isi = isi.replace(
+    '    cetak_struk(struk_2)\n\n\nif __name__',
+    '    cetak_struk(struk_2)\n\n    cetak_laporan_penjualan_harian(daftar_transaksi)\n\n\nif __name__'
+)
+
+with open('kasir.py', 'w') as f:
+    f.write(isi)
+
+print("Fungsi laporan berhasil ditambahkan")
