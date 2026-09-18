@@ -1,2 +1,2 @@
 print("=== PROGRAM KASIR SEDERHANA ===")
-print("1. Menu Utama")
+print("1. Kelola & Input Data Barang (Citra)")
