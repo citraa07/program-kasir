@@ -1,2 +1,3 @@
 print("=== PROGRAM KASIR SEDERHANA ===")
 print("1. Cetak Laporan & Transaksi (Janna)")
+print("1. Kelola & Input Data Barang (Citra)")

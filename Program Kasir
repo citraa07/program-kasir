@@ -1,0 +1,60 @@
+kasir_code = '''"""
+Program Kasir Sederhana
+Sistem Pencatatan Hasil Panen Digital
+"""
+
+daftar_transaksi = []
+
+
+def tambah_transaksi(nama_barang, jumlah, harga_satuan):
+    """Mencatat satu transaksi penjualan (barang, jumlah, harga satuan)."""
+    subtotal = jumlah * harga_satuan
+    transaksi = {
+        "nama_barang": nama_barang,
+        "jumlah": jumlah,
+        "harga_satuan": harga_satuan,
+        "subtotal": subtotal,
+    }
+    daftar_transaksi.append(transaksi)
+    return transaksi
+
+
+def hitung_total_belanja(transaksi_list):
+    """Menghitung total belanja dari sekumpulan transaksi (mis. satu struk)."""
+    return sum(t["subtotal"] for t in transaksi_list)
+
+
+def cetak_struk(transaksi_list):
+    """Mencetak struk sederhana untuk satu transaksi pembelian."""
+    print("========== STRUK PEMBELIAN ==========")
+    for t in transaksi_list:
+        print(f"{t[\\'nama_barang\\']:<15} {t[\\'jumlah\\']:>3} x Rp{t[\\'harga_satuan\\']:,.0f}"
+              f" = Rp{t[\\'subtotal\\']:,.0f}")
+    total = hitung_total_belanja(transaksi_list)
+    print("--------------------------------------")
+    print(f"{\\'TOTAL\\':<15} {\\'\\':>3}   {\\'\\':<10} = Rp{total:,.0f}")
+    print("======================================")
+
+
+def main():
+    struk_1 = [
+        tambah_transaksi("Beras 5kg", 2, 65000),
+        tambah_transaksi("Cabai 1kg", 3, 40000),
+    ]
+    cetak_struk(struk_1)
+
+    struk_2 = [
+        tambah_transaksi("Jagung 1kg", 5, 8000),
+        tambah_transaksi("Beras 5kg", 1, 65000),
+    ]
+    cetak_struk(struk_2)
+
+
+if __name__ == "__main__":
+    main()
+'''
+
+with open('kasir.py', 'w') as f:
+    f.write(kasir_code)
+
+print("File kasir.py berhasil dibuat")
